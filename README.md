@@ -1,8 +1,8 @@
-# 🎓 MENTORA - Nền tảng Học tập Trực tuyến
+# 🎓 EduLink - Nền tảng Học tập Trực tuyến
 
 <div align="center">
 
-![Mentora Logo](https://via.placeholder.com/200x100/4F46E5/FFFFFF?text=MENTORA)
+![EduLink Logo](https://via.placeholder.com/200x100/4F46E5/FFFFFF?text=EduLink)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2018.0.0-brightgreen)](https://nodejs.org/)
@@ -37,7 +37,7 @@
 
 ## 🚀 Giới thiệu
 
-**Mentora** là một nền tảng học tập trực tuyến toàn diện được thiết kế đặc biệt cho thị trường Việt Nam. Ứng dụng kết nối học viên với các giảng viên chất lượng, cung cấp các khóa học đa dạng từ công nghệ thông tin, kinh doanh, thiết kế đến phát triển cá nhân.
+**EduLink** là một nền tảng học tập trực tuyến toàn diện được thiết kế đặc biệt cho thị trường Việt Nam. Ứng dụng kết nối học viên với các giảng viên chất lượng, cung cấp các khóa học đa dạng từ công nghệ thông tin, kinh doanh, thiết kế đến phát triển cá nhân.
 
 ### 🎯 Mục tiêu
 
@@ -79,7 +79,7 @@
 
 ## 🛠 Công nghệ sử dụng
 
-### Frontend (FE-Mentora)
+### Frontend (FE-EduLink)
 
 - **Framework**: Next.js 15.2.4 (App Router)
 - **Language**: TypeScript
@@ -89,7 +89,7 @@
 - **UI Components**: Radix UI, Lucide React
 - **Notifications**: React Hot Toast
 
-### Backend (BE-Mentora)
+### Backend (BE-EduLink)
 
 - **Framework**: NestJS 11.1.0
 - **Language**: TypeScript
@@ -113,8 +113,8 @@
 ## 📁 Cấu trúc dự án
 
 ```
-MENTORA/
-├── 📁 BE-Mentora/                 # Backend NestJS
+EduLink/
+├── 📁 BE-EduLink/                 # Backend NestJS
 │   ├── 📁 src/
 │   │   ├── 📁 auth/               # Authentication module
 │   │   ├── 📁 courses/            # Course management
@@ -127,7 +127,7 @@ MENTORA/
 │   ├── 📄 package.json
 │   └── 📄 README.md
 │
-├── 📁 FE-Mentora/                 # Frontend Next.js
+├── 📁 FE-EduLink/                 # Frontend Next.js
 │   ├── 📁 src/
 │   │   ├── 📁 app/                # App Router pages
 │   │   ├── 📁 components/         # React components
@@ -165,14 +165,14 @@ MENTORA/
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/your-username/mentora.git
-cd mentora
+git clone https://github.com/your-username/EduLink.git
+cd EduLink
 ```
 
-### 2️⃣ Cài đặt Backend (BE-Mentora)
+### 2️⃣ Cài đặt Backend (BE-EduLink)
 
 ```bash
-cd BE-Mentora
+cd BE-EduLink
 ```
 
 #### Sử dụng Docker (Khuyến nghị) 🐳
@@ -200,7 +200,7 @@ npm install
 cp .env.sample .env
 
 # Chỉnh sửa file .env với thông tin database của bạn
-# DATABASE_URL="postgresql://postgres:123456789@localhost:5432/mentora"
+# DATABASE_URL="postgresql://postgres:123456789@localhost:5432/EduLink"
 
 # Tạo database và chạy migrations
 npx prisma migrate deploy
@@ -229,9 +229,9 @@ brew install postgresql redis elasticsearch
 
 ```sql
 sudo -u postgres psql
-CREATE DATABASE mentora;
-CREATE USER mentora_user WITH ENCRYPTED PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE mentora TO mentora_user;
+CREATE DATABASE EduLink;
+CREATE USER EduLink_user WITH ENCRYPTED PASSWORD 'your_password';
+GRANT ALL PRIVILEGES ON DATABASE EduLink TO EduLink_user;
 \q
 ```
 
@@ -245,10 +245,10 @@ npx prisma migrate deploy
 npx prisma generate
 ```
 
-### 3️⃣ Cài đặt Frontend (FE-Mentora)
+### 3️⃣ Cài đặt Frontend (FE-EduLink)
 
 ```bash
-cd ../FE-Mentora
+cd ../FE-EduLink
 
 # Cài đặt dependencies
 npm install
@@ -269,7 +269,7 @@ cp .env.sample .env
 PORT=9090
 
 # Database
-DATABASE_URL="postgresql://postgres:123456789@localhost:5432/mentora"
+DATABASE_URL="postgresql://postgres:123456789@localhost:5432/EduLink"
 
 # JWT Secrets
 JWT_SECRET=your-super-secret-jwt-key
@@ -298,7 +298,7 @@ EMAIL_PORT=587
 EMAIL_SECURE=false
 EMAIL_USER=your-email@gmail.com
 EMAIL_PASSWORD=your-app-password
-EMAIL_FROM=noreply@mentora.com
+EMAIL_FROM=noreply@EduLink.com
 
 # PayPal Payment
 PAYPAL_CLIENT_ID=your-paypal-sandbox-client-id
@@ -324,7 +324,7 @@ NEXT_PUBLIC_API_URL=http://localhost:9090
 1. **Start Backend:**
 
 ```bash
-cd BE-Mentora
+cd BE-EduLink
 
 # Với Docker
 docker-compose up -d
@@ -336,7 +336,7 @@ npm run start:dev
 2. **Start Frontend:**
 
 ```bash
-cd FE-Mentora
+cd FE-EduLink
 
 # Start Next.js server
 npm run dev
@@ -356,7 +356,7 @@ npm run dev
 1. **Build Backend:**
 
 ```bash
-cd BE-Mentora
+cd BE-EduLink
 npm run build
 npm run start:prod
 ```
@@ -364,7 +364,7 @@ npm run start:prod
 2. **Build Frontend:**
 
 ```bash
-cd FE-Mentora
+cd FE-EduLink
 npm run build
 npm run start
 ```
@@ -397,12 +397,12 @@ API documentation được tự động generate bằng Swagger và có thể tr
 
 ```bash
 # Backend
-cd BE-Mentora
-docker build -t mentora-backend .
+cd BE-EduLink
+docker build -t EduLink-backend .
 
 # Frontend
-cd ../FE-Mentora
-docker build -t mentora-frontend .
+cd ../FE-EduLink
+docker build -t EduLink-frontend .
 ```
 
 2. **Deploy với docker-compose:**
@@ -436,11 +436,11 @@ Xem thêm chi tiết tại [Deployment Guide](./docs/deployment.md)
 
 ```bash
 # Backend logs
-cd BE-Mentora
+cd BE-EduLink
 npm run start:dev 2>&1 | tee logs/app.log
 
 # Frontend logs
-cd FE-Mentora
+cd FE-EduLink
 npm run dev 2>&1 | tee logs/app.log
 ```
 
@@ -451,7 +451,7 @@ npm run dev 2>&1 | tee logs/app.log
 ### Backend Testing
 
 ```bash
-cd BE-Mentora
+cd BE-EduLink
 
 # Unit tests
 npm run test
@@ -466,7 +466,7 @@ npm run test:cov
 ### Frontend Testing
 
 ```bash
-cd FE-Mentora
+cd FE-EduLink
 
 # Linting
 npm run lint
@@ -512,9 +512,9 @@ Nếu bạn phát hiện lỗi, vui lòng [tạo issue](https://github.com/your-
 
 ## 📞 Hỗ trợ
 
-- **Email**: support@mentora.com
-- **Discord**: [Mentora Community](#)
-- **Documentation**: [docs.mentora.com](#)
+- **Email**: support@EduLink.com
+- **Discord**: [EduLink Community](#)
+- **Documentation**: [docs.EduLink.com](#)
 - **FAQ**: [Frequently Asked Questions](#)
 
 ---
@@ -556,6 +556,6 @@ Dự án này được phân phối dưới giấy phép MIT. Xem file [LICENSE]
 
 **⭐ Đừng quên star repository nếu bạn thấy hữu ích! ⭐**
 
-Made with ❤️ by Mentora Team
+Made with ❤️ by EduLink Team
 
 </div>
