@@ -53,11 +53,13 @@
 ### 👨‍🎓 Dành cho Học viên
 
 - **📚 Khóa học đa dạng**: Hàng nghìn khóa học chất lượng cao
+- **🤖 Gợi ý khóa học bằng AI**: Hệ thống AI phân tích hành vi học tập và gợi ý khóa học phù hợp
 - **🎥 Video học tập**: Hỗ trợ streaming video mượt mà
 - **📝 Bài tập & Quiz**: Hệ thống đánh giá tiến độ học tập
 - **💬 Thảo luận**: Tương tác với giảng viên và học viên khác
 - **🏆 Chứng chỉ**: Nhận chứng chỉ hoàn thành khóa học
 - **❤️ Yêu thích**: Lưu các khóa học quan tâm
+- **🎮 Gamification**: Tích lũy điểm, huy hiệu, và xếp hạng khi hoàn thành bài học 
 - **🛒 Giỏ hàng**: Mua nhiều khóa học cùng lúc
 
 ### 👨‍🏫 Dành cho Giảng viên
@@ -72,6 +74,7 @@
 
 - **🏢 Quản lý hệ thống**: Dashboard tổng quan
 - **✅ Duyệt khóa học**: Kiểm soát chất lượng nội dung
+- **🤖 AI Monitoring**: Theo dõi và tinh chỉnh thuật toán gợi ý 
 - **👤 Quản lý người dùng**: Hệ thống phân quyền
 - **📈 Báo cáo**: Thống kê chi tiết
 
