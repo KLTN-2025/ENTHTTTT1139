@@ -1,0 +1,94 @@
+# ========================================
+# DEPENDENCIES & BUILD OUTPUT
+# ========================================
+/node_modules
+/.pnp
+.pnp.*
+/dist
+/build
+/.next/
+.out/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# ========================================
+# TESTING
+# ========================================
+/coverage
+/.nyc_output
+
+# ========================================
+# LOGS
+# ========================================
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# ========================================
+# ENVIRONMENT VARIABLES
+# ========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.sample
+
+# ========================================
+# IDEs & EDITORS
+# ========================================
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# VSCode settings (keep specific config files)
+/.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ========================================
+# TYPESCRIPT
+# ========================================
+*.tsbuildinfo
+next-env.d.ts
+
+# ========================================
+# TEMPORARY & RUNTIME DATA
+# ========================================
+.temp
+.tmp
+pids
+*.pid
+*.pid.lock
+*.seed
+
+# ========================================
+# UPLOADS (user-generated content)
+# ========================================
+/uploads/
+
+# ========================================
+# DEBUG / DIAGNOSTIC
+# ========================================
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# ========================================
+# MISC
+# ========================================
+.DS_Store
+*.pem
+.vercel
