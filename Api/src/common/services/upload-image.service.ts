@@ -19,7 +19,7 @@ export class CloudinaryService {
 
   async uploadImage(
     file: Express.Multer.File,
-    folder: string = 'mentora',
+    folder: string = 'edulink',
   ): Promise<any> {
     try {
       return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export class CloudinaryService {
 
   async uploadBase64Image(
     base64: string,
-    folder: string = 'mentora',
+    folder: string = 'edulink',
   ): Promise<any> {
     try {
       return await cloudinary.uploader.upload(base64, {
@@ -81,7 +81,7 @@ export class CloudinaryService {
       if (!file) {
         throw new Error('No file uploaded');
       }
-      const result = await this.uploadImage(file, `mentora/profile/${userId}`);
+      const result = await this.uploadImage(file, `edulink/profile/${userId}`);
 
       if (result) {
         await this.userService.updateUserProfile(userId, {

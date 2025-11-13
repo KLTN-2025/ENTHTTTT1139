@@ -51,7 +51,9 @@ export const CourseService = {
         return response.data.data.data;
       }
 
-      throw new Error(response.data?.data?.message || `Lỗi khi cập nhật thông tin khóa học ID ${courseId}`);
+      throw new Error(
+        response.data?.data?.message || `Lỗi khi cập nhật thông tin khóa học ID ${courseId}`
+      );
     } catch (error) {
       console.error(`Lỗi khi cập nhật thông tin khóa học ID ${courseId}:`, error);
       return null;
@@ -66,20 +68,18 @@ export const CourseService = {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axiosInstance.post<ApiResponse<{
-        thumbnailUrl: string;
-        publicId: string;
-        width: number;
-        height: number;
-      }>>(
-        `/upload-image/course/${courseId}/thumbnail`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      const response = await axiosInstance.post<
+        ApiResponse<{
+          thumbnailUrl: string;
+          publicId: string;
+          width: number;
+          height: number;
+        }>
+      >(`/upload-image/course/${courseId}/thumbnail`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       if (response.data && response.data.statusCode === 201) {
         return {
@@ -88,7 +88,9 @@ export const CourseService = {
         };
       }
 
-      throw new Error(response.data?.data?.message || `Lỗi khi upload ảnh thumbnail cho khóa học ID ${courseId}`);
+      throw new Error(
+        response.data?.data?.message || `Lỗi khi upload ảnh thumbnail cho khóa học ID ${courseId}`
+      );
     } catch (error) {
       console.error(`Lỗi khi upload ảnh thumbnail cho khóa học ID ${courseId}:`, error);
       return null;
@@ -105,20 +107,18 @@ export const CourseService = {
       formData.append('file', file);
       formData.append('imageType', imageType);
 
-      const response = await axiosInstance.post<ApiResponse<{
-        imageUrl: string;
-        publicId: string;
-        width: number;
-        height: number;
-      }>>(
-        `/upload-image/course/${courseId}/images`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      const response = await axiosInstance.post<
+        ApiResponse<{
+          imageUrl: string;
+          publicId: string;
+          width: number;
+          height: number;
+        }>
+      >(`/upload-image/course/${courseId}/images`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       if (response.data && response.data.statusCode === 201) {
         return {
@@ -127,21 +127,20 @@ export const CourseService = {
         };
       }
 
-      throw new Error(response.data?.data?.message || `Lỗi khi upload ảnh nội dung cho khóa học ID ${courseId}`);
+      throw new Error(
+        response.data?.data?.message || `Lỗi khi upload ảnh nội dung cho khóa học ID ${courseId}`
+      );
     } catch (error) {
       console.error(`Lỗi khi upload ảnh nội dung cho khóa học ID ${courseId}:`, error);
       return null;
     }
   },
 
-  async deleteCourseImage(
-    courseId: string,
-    publicId: string
-  ): Promise<boolean> {
+  async deleteCourseImage(courseId: string, publicId: string): Promise<boolean> {
     try {
       console.log('Deleting image with publicId:', publicId);
 
-      // publicId từ kết quả upload có dạng: "mentora/courses/7f75d0c2-5ca1-471b-ba8f-87ed618d0761/thumbnail/njjsmn949wuvt9oikwlp"
+      // publicId từ kết quả upload có dạng: "edulink/courses/7f75d0c2-5ca1-471b-ba8f-87ed618d0761/thumbnail/njjsmn949wuvt9oikwlp"
       // Nhưng API cần format: publicId từ sau /thumbnail/ (chỉ lấy phần cuối)
       let actualPublicId = publicId;
 
@@ -160,10 +159,12 @@ export const CourseService = {
       const endpoint = `/upload-image/course/${courseId}/thumbnail/${actualPublicId}`;
       console.log('Delete endpoint:', endpoint);
 
-      const response = await axiosInstance.delete<ApiResponse<{
-        success: boolean;
-        message: string;
-      }>>(endpoint);
+      const response = await axiosInstance.delete<
+        ApiResponse<{
+          success: boolean;
+          message: string;
+        }>
+      >(endpoint);
 
       console.log('Delete response:', response.data);
 

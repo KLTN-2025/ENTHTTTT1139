@@ -49,7 +49,10 @@ export class ProgressService {
         },
       });
     if (existingProgress) {
-      throw new HttpException('Progress already exists', HttpStatus.CONFLICT);
+      return {
+        progress: existingProgress,
+        alreadyExists: true,
+      };
     }
 
     const progress = await this.prismaService.tbl_curriculum_progress.create({
@@ -57,14 +60,16 @@ export class ProgressService {
         progressId: uuidv4(),
         userId: body.userId,
         curriculumId: body.curriculumId,
-        status: body.status,
-        completedAt: new Date(),
+        status: body.status ?? 'COMPLETED',
+        completedAt:
+          body.status && body.status !== 'COMPLETED' ? null : new Date(),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     });
     return {
       progress,
+      alreadyExists: false,
     };
   }
 

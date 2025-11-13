@@ -22,12 +22,12 @@ export class EmailService {
     const verificationUrl = `${appUrl}/verify-email?token=${token}`;
 
     await this.transporter.sendMail({
-      from: `"Mentora" <${this.configService.get<string>('EMAIL_FROM') || 'noreply@mentora.com'}>`,
+      from: `"EduLink" <${this.configService.get<string>('EMAIL_FROM') || 'noreply@edulink.com'}>`,
       to: email,
-      subject: 'Xác nhận đăng ký tài khoản Mentora',
+      subject: 'Xác nhận đăng ký tài khoản EduLink',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #1dbe70;">Chào mừng bạn đến với Mentora!</h2>
+          <h2 style="color: #1dbe70;">Chào mừng bạn đến với EduLink!</h2>
           <p>Cảm ơn bạn đã đăng ký tài khoản trên hệ thống của chúng tôi.</p>
           <p>Để hoàn tất quá trình đăng ký, vui lòng xác nhận địa chỉ email của bạn bằng cách nhấp vào liên kết bên dưới:</p>
           
@@ -44,7 +44,7 @@ export class EmailService {
           <p>Nếu bạn không thực hiện yêu cầu này, bạn có thể bỏ qua email này.</p>
           
           <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 12px;">
-            <p>© ${new Date().getFullYear()} Mentora. Tất cả các quyền được bảo lưu.</p>
+            <p>© ${new Date().getFullYear()} EduLink. Tất cả các quyền được bảo lưu.</p>
             <p>Đây là email tự động, vui lòng không trả lời.</p>
           </div>
         </div>
@@ -57,17 +57,17 @@ export class EmailService {
     const resetPasswordUrl = `${baseUrl}/reset-password?token=${resetToken}`;
 
     const mailOptions = {
-      from: `"Mentora" <${this.configService.get<string>('EMAIL_FROM') || 'noreply@mentora.com'}>`,
+      from: `"EduLink" <${this.configService.get<string>('EMAIL_FROM') || 'noreply@edulink.com'}>`,
       to: email,
-      subject: 'Đặt lại mật khẩu cho tài khoản Mentora',
+      subject: 'Đặt lại mật khẩu cho tài khoản EduLink',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>Đặt lại mật khẩu</h2>
-          <p>Bạn nhận được email này vì đã yêu cầu đặt lại mật khẩu cho tài khoản Mentora.</p>
+          <p>Bạn nhận được email này vì đã yêu cầu đặt lại mật khẩu cho tài khoản EduLink.</p>
           <p>Vui lòng nhấp vào liên kết dưới đây để đặt lại mật khẩu. Liên kết này sẽ hết hạn sau 1 giờ.</p>
           <a href="${resetPasswordUrl}" style="display: inline-block; padding: 10px 20px; background-color: #1dbe70; color: white; text-decoration: none; border-radius: 5px;">Đặt lại mật khẩu</a>
           <p>Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.</p>
-          <p>Trân trọng,<br>Đội ngũ Mentora</p>
+          <p>Trân trọng,<br>Đội ngũ EduLink</p>
         </div>
       `,
     };
@@ -83,20 +83,20 @@ export class EmailService {
   }
 
   async sendPaypalVerificationEmail(
-    userEmail: string, 
-    instructorName: string, 
-    paypalEmail: string, 
-    verificationUrl: string
+    userEmail: string,
+    instructorName: string,
+    paypalEmail: string,
+    verificationUrl: string,
   ) {
     const mailOptions = {
-      from: `"Mentora" <${this.configService.get<string>('EMAIL_FROM') || 'noreply@mentora.com'}>`,
+      from: `"EduLink" <${this.configService.get<string>('EMAIL_FROM') || 'noreply@edulink.com'}>`,
       to: userEmail,
-      subject: 'Xác minh tài khoản PayPal cho Mentora',
+      subject: 'Xác minh tài khoản PayPal cho EduLink',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #1dbe70;">Xác minh tài khoản PayPal</h2>
           <p>Xin chào ${instructorName},</p>
-          <p>Cảm ơn bạn đã đăng ký tài khoản PayPal ${paypalEmail} cho hệ thống thanh toán của Mentora.</p>
+            <p>Cảm ơn bạn đã đăng ký tài khoản PayPal ${paypalEmail} cho hệ thống thanh toán của EduLink.</p>
           <p>Để hoàn tất quá trình đăng ký, vui lòng xác nhận tài khoản PayPal của bạn bằng cách nhấp vào liên kết bên dưới:</p>
           
           <div style="text-align: center; margin: 30px 0;">
@@ -112,7 +112,7 @@ export class EmailService {
           <p>Nếu bạn không thực hiện yêu cầu này, vui lòng liên hệ ngay với chúng tôi.</p>
           
           <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 12px;">
-            <p>© ${new Date().getFullYear()} Mentora. Tất cả các quyền được bảo lưu.</p>
+            <p>© ${new Date().getFullYear()} EduLink. Tất cả các quyền được bảo lưu.</p>
             <p>Đây là email tự động, vui lòng không trả lời.</p>
           </div>
         </div>

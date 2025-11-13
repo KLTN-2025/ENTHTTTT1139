@@ -25,6 +25,40 @@ export default function LectureContentUploader({
   const [videoUrl, setVideoUrl] = useState<string | null>(lecture.videoUrl || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Lấy thời lượng thực tế của file video từ metadata
+  const getVideoDurationInSeconds = (file: File): Promise<number> => {
+    return new Promise((resolve, reject) => {
+      try {
+        const url = URL.createObjectURL(file);
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.src = url;
+
+        const cleanUp = () => {
+          URL.revokeObjectURL(url);
+        };
+
+        video.onloadedmetadata = () => {
+          try {
+            const duration = Math.round(video.duration || 0);
+            cleanUp();
+            resolve(duration);
+          } catch (e) {
+            cleanUp();
+            reject(e);
+          }
+        };
+
+        video.onerror = () => {
+          cleanUp();
+          reject(new Error('Không thể đọc metadata của video'));
+        };
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
   // Xử lý khi chọn file
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // Lấy file đầu tiên từ input
@@ -46,6 +80,15 @@ export default function LectureContentUploader({
     setMessage('');
 
     try {
+      // Tính đúng thời lượng từ metadata (fallback sang ước lượng nếu thất bại)
+      let durationSeconds = 0;
+      try {
+        durationSeconds = await getVideoDurationInSeconds(selectedFile);
+      } catch {
+        // Fallback: ước lượng (ít chính xác) theo kích thước file nếu không đọc được metadata
+        durationSeconds = Math.round((selectedFile.size / (1024 * 1024)) * 5 * 60);
+      }
+
       // Sử dụng service để upload video
       const videoPath = await VideoService.uploadLectureVideo(
         selectedFile,
@@ -57,8 +100,8 @@ export default function LectureContentUploader({
       // Cập nhật videoUrl cho lecture
       await LectureService.updateLecture(lecture.lectureId, {
         videoUrl: videoPath,
-        // Tính toán thời lượng video (giả định 5 phút cho mỗi MB)
-        duration: Math.round((selectedFile.size / (1024 * 1024)) * 5 * 60),
+        // Lưu thời lượng thực tế đã tính
+        duration: durationSeconds,
       });
 
       setVideoUrl(videoPath);

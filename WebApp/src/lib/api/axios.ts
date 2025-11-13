@@ -81,16 +81,40 @@ axiosInstance.interceptors.response.use(
       
       // Kiểm tra lỗi 401 - Unauthorized
       if (error.response.status === 401) {
-        console.error('[axios] Unauthorized: Token may be invalid or expired');
-        
-        // Xóa token để yêu cầu đăng nhập lại
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('token');
-        Cookies.remove('accessToken', { path: '/' });
-        Cookies.remove('token', { path: '/' });
-        
-        // Thông báo cho người dùng
-        console.error('[axios] Tokens cleared. User needs to log in again.');
+        const requestUrl: string = error.config?.url || '';
+        const responseData: any = error.response?.data || {};
+        const serverMessage: string = String(
+          responseData?.message ||
+            responseData?.error ||
+            responseData?.errorMessage ||
+            ''
+        ).toLowerCase();
+        const errorCode: string = String(responseData?.errorCode || '').toUpperCase();
+
+        // Chỉ coi là 401 do token khi có mã lỗi/chuỗi liên quan đến token
+        const isAuthRelated401 =
+          ['TOKEN_EXPIRED', 'TOKEN_INVALID', 'UNAUTHORIZED', 'INVALID_TOKEN'].includes(errorCode) ||
+          serverMessage.includes('token') ||
+          serverMessage.includes('jwt') ||
+          serverMessage.includes('hết hạn') ||
+          serverMessage.includes('expired');
+
+        // Additionally, bảo vệ các route nghiệp vụ (như /payment, /courses, ...) khỏi việc tự logout
+        const isBusinessEndpoint = /^\/?(payment|customer-payment|courses|cart|instructor|enrollments|voucher)/i.test(
+          requestUrl
+        );
+
+        if (isAuthRelated401 && !isBusinessEndpoint) {
+          console.error('[axios] Unauthorized due to auth token. Clearing tokens and requiring login.');
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('token');
+          Cookies.remove('accessToken', { path: '/' });
+          Cookies.remove('token', { path: '/' });
+        } else {
+          console.warn(
+            '[axios] 401 received but not treated as auth-expired. Keeping session tokens.'
+          );
+        }
       }
     } else if (error.request) {
       // Lỗi không có response

@@ -48,10 +48,23 @@ export default function LearningPage() {
         setLoading(true);
         const response = await axiosInstance.get('enrollments/my-courses');
         if (response.data.data.success) {
-          const enrollmentsWithProgress = response.data.data.data.map((enrollment: Enrollment) => ({
-            ...enrollment,
-            progress: Math.floor(Math.random() * 100),
-          }));
+          const raw = response.data.data.data as Enrollment[];
+          // Lấy tiến độ thật cho từng khoá
+          const enrollmentsWithProgress = await Promise.all(
+            raw.map(async (enrollment: any) => {
+              let progressPercent = 0;
+              try {
+                const { CourseProgressService } = await import('@/apis/courseProgressService');
+                const progressData = await CourseProgressService.getCourseProgress(
+                  enrollment.course.courseId
+                );
+                progressPercent = Math.round(progressData.overallProgressPercentage || 0);
+              } catch (e) {
+                console.warn('Không lấy được tiến độ khóa học:', enrollment.course?.title, e);
+              }
+              return { ...enrollment, progress: progressPercent } as Enrollment;
+            })
+          );
 
           setEnrollments(enrollmentsWithProgress);
         } else {

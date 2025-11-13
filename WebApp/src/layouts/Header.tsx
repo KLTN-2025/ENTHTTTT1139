@@ -293,21 +293,39 @@ const Header = () => {
 
         if (response.data.data.success) {
           // Lấy và giới hạn 4 khóa học gần nhất
-          const enrollmentsWithProgress = response.data.data.data
-            .slice(0, 4) // Chỉ lấy 4 khóa học đầu tiên
-            .map((enrollment: any) => ({
-              enrollmentId: enrollment.enrollmentId,
-              enrolledAt: enrollment.enrolledAt,
-              course: {
-                courseId: enrollment.course.courseId,
-                title: enrollment.course.title,
-                thumbnail: enrollment.course.thumbnail,
-                instructor: enrollment.course.instructor,
-              },
-              progress: Math.floor(Math.random() * 100), // Giả lập progress, thay thế bằng dữ liệu thực khi có
-            }));
+          const rawEnrollments = response.data.data.data.slice(0, 4);
 
-          setEnrolledCourses(enrollmentsWithProgress);
+          // Nạp tiến độ thực tế cho từng khóa học
+          const enrollmentsWithProgress = await Promise.all(
+            rawEnrollments.map(async (enrollment: any) => {
+              let progressPercent = 0;
+              try {
+                // Import động để tránh tăng bundle nếu không sử dụng
+                const { CourseProgressService } = await import('@/apis/courseProgressService');
+                const progressData = await CourseProgressService.getCourseProgress(
+                  enrollment.course.courseId
+                );
+                progressPercent = Math.round(progressData.overallProgressPercentage || 0);
+              } catch (e) {
+                // Nếu lỗi, giữ 0%
+                console.warn('Không lấy được tiến độ khóa học:', enrollment.course?.title, e);
+              }
+
+              return {
+                enrollmentId: enrollment.enrollmentId,
+                enrolledAt: enrollment.enrolledAt,
+                course: {
+                  courseId: enrollment.course.courseId,
+                  title: enrollment.course.title,
+                  thumbnail: enrollment.course.thumbnail,
+                  instructor: enrollment.course.instructor,
+                },
+                progress: progressPercent,
+              } as Enrollment;
+            })
+          );
+
+          setEnrolledCourses(enrollmentsWithProgress as unknown as Enrollment[]);
         }
       } catch (error) {
         console.error('Lỗi khi tải khóa học đã đăng ký:', error);
@@ -420,7 +438,7 @@ const Header = () => {
         <div className="flex flex-col md:flex-row md:px-6">
           <div className="flex items-center justify-between px-6 py-4 md:hidden">
             <Link href="/" legacyBehavior className="cursor-pointer">
-              <Image src="/mentora-logo.svg" alt="logo" width={120} height={120} priority />
+              <Image src="/edulink-logo.svg" alt="logo" width={120} height={120} priority />
             </Link>
             <button onClick={toggleMobileMenu} className="focus:outline-none">
               {mobileMenuOpen ? (
@@ -463,7 +481,7 @@ const Header = () => {
             <div className="hidden md:block mb-2">
               <Link href="/" legacyBehavior>
                 <Image
-                  src="/mentora-logo.svg"
+                  src="/edulink-logo.svg"
                   alt="logo"
                   width={120}
                   height={120}

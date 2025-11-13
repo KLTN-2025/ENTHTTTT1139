@@ -38,9 +38,9 @@ async function main() {
   const adminUser = await prisma.tbl_users.create({
     data: {
       userId: uuidv4(),
-      email: 'admin@mentora.com',
+      email: 'admin@edulink.com',
       password: await bcrypt.hash('123456789', 10),
-      fullName: 'Admin Mentora',
+      fullName: 'Admin EduLink',
       role: 'ADMIN',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -50,7 +50,7 @@ async function main() {
   const instructorUser = await prisma.tbl_users.create({
     data: {
       userId: uuidv4(),
-      email: 'instructor@mentora.com',
+      email: 'instructor@edulink.com',
       password: await bcrypt.hash('123456789', 10),
       fullName: 'John Doe',
       role: 'INSTRUCTOR',
@@ -62,7 +62,7 @@ async function main() {
   const studentUser = await prisma.tbl_users.create({
     data: {
       userId: uuidv4(),
-      email: 'student@mentora.com',
+      email: 'student@edulink.com',
       password: await bcrypt.hash('123456789', 10),
       fullName: 'Jane Smith',
       role: 'STUDENT',
@@ -76,9 +76,9 @@ async function main() {
       instructorId: uuidv4(),
       userId: instructorUser.userId,
       instructorName: instructorUser.fullName,
-      bio: 'Experienced instructor with 10 years of teaching',
+      bio: 'Giảng viên có kinh nghiệm với 10 năm giảng dạy',
       profilePicture: '',
-      experience: '10 years of teaching experience',
+      experience: '10 năm kinh nghiệm giảng dạy',
       average_rating: 4.5,
       isVerified: true,
       createdAt: new Date(),
@@ -106,7 +106,7 @@ async function main() {
     data: {
       categoryId: uuidv4(),
       name: 'FINANCE',
-      description: 'Finance related courses',
+      description: 'Các khóa học về tài chính',
     },
   });
 
@@ -114,7 +114,7 @@ async function main() {
     data: {
       categoryId: uuidv4(),
       name: 'BUSSINESS',
-      description: 'Business related courses',
+      description: 'Các khóa học về kinh doanh',
     },
   });
 
@@ -123,7 +123,7 @@ async function main() {
       categoryId: uuidv4(),
       name: 'DESIGN',
       // name: 'Design',
-      description: 'Design related courses',
+      description: 'Các khóa học về thiết kế',
     },
   });
 
@@ -180,10 +180,10 @@ async function main() {
     data: {
       courseId: uuidv4(),
       instructorId: instructor.instructorId,
-      title: 'Complete Web Development Bootcamp',
-      description: 'Learn web development from scratch',
-      overview: 'Comprehensive course covering HTML, CSS, JavaScript',
-      durationTime: 4800, // 80 hours in minutes
+      title: 'Khóa học Phát triển Web Toàn diện',
+      description: 'Học phát triển web từ đầu',
+      overview: 'Khóa học toàn diện bao gồm HTML, CSS, JavaScript',
+      durationTime: 4800, // 80 giờ tính bằng phút
       price: 99.99,
       approved: 'APPROVED',
       rating: 4.5,
@@ -236,9 +236,9 @@ async function main() {
     data: {
       moduleId: uuidv4(),
       courseId: course1.courseId,
-      title: 'HTML Fundamentals',
+      title: 'Cơ bản về HTML',
       orderIndex: 1,
-      description: 'Learn HTML basics',
+      description: 'Học kiến thức cơ bản về HTML',
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -248,10 +248,10 @@ async function main() {
     data: {
       curriculumId: uuidv4(),
       moduleId: module1.moduleId,
-      title: 'Introduction to HTML',
+      title: 'Giới thiệu về HTML',
       orderIndex: 1,
       type: 'LECTURE',
-      description: 'Basic HTML concepts',
+      description: 'Các khái niệm cơ bản về HTML',
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -261,8 +261,8 @@ async function main() {
     data: {
       lectureId: uuidv4(),
       curriculumId: curriculum1.curriculumId,
-      title: 'Introduction to HTML',
-      description: 'Basic HTML concepts',
+      title: 'Giới thiệu về HTML',
+      description: 'Các khái niệm cơ bản về HTML',
       videoUrl: 'https://youtu.be/ok-plXXHlWw?si=RSHNUBrFWFRTqoBd',
       duration: 30,
       isFree: true,
@@ -274,9 +274,9 @@ async function main() {
     data: {
       moduleId: uuidv4(),
       courseId: course1.courseId,
-      title: 'CSS Fundamentals',
+      title: 'Cơ bản về CSS',
       orderIndex: 2,
-      description: 'Learn CSS basics',
+      description: 'Học kiến thức cơ bản về CSS',
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -286,10 +286,10 @@ async function main() {
     data: {
       curriculumId: uuidv4(),
       moduleId: module2.moduleId,
-      title: 'Introduction to CSS',
+      title: 'Giới thiệu về CSS',
       orderIndex: 1,
       type: 'LECTURE',
-      description: 'Basic CSS concepts',
+      description: 'Các khái niệm cơ bản về CSS',
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -299,8 +299,8 @@ async function main() {
     data: {
       lectureId: uuidv4(),
       curriculumId: curriculum2.curriculumId,
-      title: 'Introduction to CSS',
-      description: 'Basic CSS concepts',
+      title: 'Giới thiệu về CSS',
+      description: 'Các khái niệm cơ bản về CSS',
       videoUrl: 'https://youtu.be/OEV8gMkCHXQ',
       duration: 35,
       isFree: true,
@@ -313,9 +313,9 @@ async function main() {
     data: {
       moduleId: uuidv4(),
       courseId: course1.courseId,
-      title: 'JavaScript Basics',
+      title: 'Cơ bản về JavaScript',
       orderIndex: 3,
-      description: 'Learn JavaScript fundamentals',
+      description: 'Học kiến thức cơ bản về JavaScript',
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -325,10 +325,10 @@ async function main() {
     data: {
       curriculumId: uuidv4(),
       moduleId: module3.moduleId,
-      title: 'Introduction to JavaScript',
+      title: 'Giới thiệu về JavaScript',
       orderIndex: 1,
       type: 'LECTURE',
-      description: 'Basic JavaScript concepts',
+      description: 'Các khái niệm cơ bản về JavaScript',
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -338,8 +338,8 @@ async function main() {
     data: {
       lectureId: uuidv4(),
       curriculumId: curriculum3.curriculumId,
-      title: 'Introduction to JavaScript',
-      description: 'Basic JavaScript concepts',
+      title: 'Giới thiệu về JavaScript',
+      description: 'Các khái niệm cơ bản về JavaScript',
       videoUrl: 'https://youtu.be/W6NZfCO5SIk',
       duration: 40,
       isFree: true,
@@ -352,13 +352,13 @@ async function main() {
     data: {
       voucherId: uuidv4(),
       code: 'WELCOME2025',
-      description: 'Welcome discount for new users',
+      description: 'Giảm giá chào mừng cho người dùng mới',
       scope: 'ALL_COURSES',
       discountType: 'Percentage',
       discountValue: 20,
       maxDiscount: 50,
       startDate: new Date(),
-      endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+      endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 ngày kể từ bây giờ
       maxUsage: 100,
       isActive: true,
       createdAt: new Date(),
@@ -399,7 +399,7 @@ async function main() {
       {
         objectiveId: uuidv4(),
         courseId: course1.courseId,
-        description: 'Understand the basics of HTML, CSS, and JavaScript',
+        description: 'Hiểu các kiến thức cơ bản về HTML, CSS và JavaScript',
         orderIndex: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -407,7 +407,7 @@ async function main() {
       {
         objectiveId: uuidv4(),
         courseId: course1.courseId,
-        description: 'Build responsive and modern web applications',
+        description: 'Xây dựng các ứng dụng web hiện đại và responsive',
         orderIndex: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -416,7 +416,7 @@ async function main() {
         objectiveId: uuidv4(),
         courseId: course1.courseId,
         description:
-          'Develop skills to work with front-end and back-end technologies',
+          'Phát triển kỹ năng làm việc với công nghệ front-end và back-end',
         orderIndex: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -429,7 +429,7 @@ async function main() {
       {
         requirementId: uuidv4(),
         courseId: course1.courseId,
-        description: 'Basic understanding of how to use a computer',
+        description: 'Hiểu biết cơ bản về cách sử dụng máy tính',
         orderIndex: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -437,7 +437,7 @@ async function main() {
       {
         requirementId: uuidv4(),
         courseId: course1.courseId,
-        description: 'A stable internet connection',
+        description: 'Kết nối internet ổn định',
         orderIndex: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -445,7 +445,7 @@ async function main() {
       {
         requirementId: uuidv4(),
         courseId: course1.courseId,
-        description: 'No prior programming knowledge required',
+        description: 'Không yêu cầu kiến thức lập trình trước đó',
         orderIndex: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -458,7 +458,7 @@ async function main() {
       {
         audienceId: uuidv4(),
         courseId: course1.courseId,
-        description: 'Beginners who want to learn web development',
+        description: 'Người mới bắt đầu muốn học phát triển web',
         orderIndex: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -466,7 +466,8 @@ async function main() {
       {
         audienceId: uuidv4(),
         courseId: course1.courseId,
-        description: 'Aspiring front-end or full-stack developers',
+        description:
+          'Những nhà phát triển front-end hoặc full-stack đầy tham vọng',
         orderIndex: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -474,7 +475,7 @@ async function main() {
       {
         audienceId: uuidv4(),
         courseId: course1.courseId,
-        description: 'Entrepreneurs who want to build their own websites',
+        description: 'Doanh nhân muốn xây dựng website của riêng mình',
         orderIndex: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -485,11 +486,11 @@ async function main() {
   // Tạo thêm một số khóa học để demo
   const additionalCourses = [
     {
-      title: 'JavaScript Masterclass',
-      description: 'Advanced JavaScript concepts and patterns',
+      title: 'Khóa học JavaScript Chuyên sâu',
+      description: 'Các khái niệm và mẫu thiết kế JavaScript nâng cao',
       overview:
-        'Deep dive into JavaScript, covering advanced topics like closures, prototypes, and async programming',
-      durationTime: 3000, // 50 hours
+        'Đi sâu vào JavaScript, bao gồm các chủ đề nâng cao như closures, prototypes và lập trình bất đồng bộ',
+      durationTime: 3000, // 50 giờ
       price: 1000000,
       thumbnail:
         'https://plus.unsplash.com/premium_vector-1734528979745-eaa10d557eed?q=80&w=2148&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -498,11 +499,11 @@ async function main() {
       categoryId: informationTechCategory.categoryId,
     },
     {
-      title: 'Digital Marketing Fundamentals',
-      description: 'Learn the basics of digital marketing',
+      title: 'Cơ bản về Marketing Kỹ thuật số',
+      description: 'Học kiến thức cơ bản về marketing kỹ thuật số',
       overview:
-        'Comprehensive introduction to SEO, SEM, social media marketing, and content strategy',
-      durationTime: 1800, // 30 hours
+        'Giới thiệu toàn diện về SEO, SEM, marketing trên mạng xã hội và chiến lược nội dung',
+      durationTime: 1800, // 30 giờ
       price: 500000,
       thumbnail:
         'https://plus.unsplash.com/premium_vector-1730731379517-dd0bc0f201cf?q=80&w=2148&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -511,11 +512,11 @@ async function main() {
       categoryId: marketingCategory.categoryId,
     },
     {
-      title: 'Mobile App Development with React Native',
-      description: 'Build cross-platform mobile apps',
+      title: 'Phát triển Ứng dụng Di động với React Native',
+      description: 'Xây dựng ứng dụng di động đa nền tảng',
       overview:
-        'Learn to develop iOS and Android apps using a single codebase with React Native',
-      durationTime: 3600, // 60 hours
+        'Học cách phát triển ứng dụng iOS và Android sử dụng một codebase duy nhất với React Native',
+      durationTime: 3600, // 60 giờ
       price: 2000000,
       thumbnail:
         'https://cdn.hashnode.com/res/hashnode/image/upload/v1681468530991/3ff30cea-325d-412e-8c2d-7e091df05b68.png?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp',
@@ -683,7 +684,7 @@ async function main() {
         instructorId: instructor.instructorId,
         ...courseInfo,
         approved: 'APPROVED',
-        rating: 4.0 + Math.random(), // Random rating từ 4.0 đến 5.0
+        rating: 4.0 + Math.random(), // Đánh giá ngẫu nhiên từ 4.0 đến 5.0
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -707,7 +708,7 @@ async function main() {
         instructorId: instructor.instructorId,
         ...courseInfo,
         approved: 'APPROVED',
-        rating: 4.2 + Math.random() * 0.8, // Random rating từ 4.2 đến 5.0
+        rating: 4.2 + Math.random() * 0.8, // Đánh giá ngẫu nhiên từ 4.2 đến 5.0
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -726,7 +727,7 @@ async function main() {
 
   // Danh sách khóa học cho các danh mục mới
   const additionalCategoryCoursesData = [
-    // Finance courses
+    // Các khóa học về Tài chính
     {
       title: 'Đầu tư chứng khoán cơ bản',
       description: 'Các nguyên tắc cơ bản của đầu tư chứng khoán',
@@ -754,7 +755,7 @@ async function main() {
       categoryId: financeCategory.categoryId,
     },
 
-    // Business courses
+    // Các khóa học về Kinh doanh
     {
       title: 'Khởi nghiệp kinh doanh',
       description: 'Từ ý tưởng đến mô hình kinh doanh thành công',
@@ -782,7 +783,7 @@ async function main() {
       categoryId: businessCategory.categoryId,
     },
 
-    // Design courses
+    // Các khóa học về Thiết kế
     {
       title: 'Thiết kế đồ họa với Adobe Creative Suite',
       description: 'Học Photoshop, Illustrator và InDesign chuyên nghiệp',
@@ -810,7 +811,7 @@ async function main() {
       categoryId: designCategory.categoryId,
     },
 
-    // Lifestyle courses
+    // Các khóa học về Phong cách sống
     {
       title: 'Nghệ thuật nấu ăn cơ bản',
       description: 'Học nấu các món ăn từ nhiều nền ẩm thực',
@@ -838,7 +839,7 @@ async function main() {
       categoryId: lifestyleCategory.categoryId,
     },
 
-    // Personal Development courses
+    // Các khóa học về Phát triển Cá nhân
     {
       title: 'Kỹ năng giao tiếp hiệu quả',
       description: 'Phát triển khả năng giao tiếp trong công việc và cuộc sống',
@@ -866,7 +867,7 @@ async function main() {
       categoryId: personalDevCategory.categoryId,
     },
 
-    // Health courses
+    // Các khóa học về Sức khỏe
     {
       title: 'Yoga cho sức khỏe và tinh thần',
       description: 'Các bài tập yoga từ cơ bản đến nâng cao',
@@ -894,7 +895,7 @@ async function main() {
       categoryId: healthCategory.categoryId,
     },
 
-    // Music courses
+    // Các khóa học về Âm nhạc
     {
       title: 'Học đàn guitar cho người mới bắt đầu',
       description: 'Từ cơ bản đến có thể chơi được các bài hát đơn giản',
@@ -922,7 +923,7 @@ async function main() {
       categoryId: musicCategory.categoryId,
     },
 
-    // Language courses
+    // Các khóa học về Ngôn ngữ
     {
       title: 'Tiếng Anh giao tiếp cho người mới bắt đầu',
       description: 'Phát triển kỹ năng giao tiếp tiếng Anh cơ bản',
@@ -950,7 +951,7 @@ async function main() {
       categoryId: languageCategory.categoryId,
     },
 
-    // Science courses
+    // Các khóa học về Khoa học
     {
       title: 'Khoa học dữ liệu cho người mới bắt đầu',
       description: 'Nhập môn về thống kê, phân tích dữ liệu và mô hình dự đoán',
@@ -978,13 +979,13 @@ async function main() {
       categoryId: scienceCategory.categoryId,
     },
 
-    // Math courses
+    // Các khóa học về Toán học
     {
       title: 'Toán cao cấp cho đại học',
       description: 'Giải tích, đại số tuyến tính và phương trình vi phân',
       overview:
         'Khóa học cung cấp nền tảng toán học cần thiết cho sinh viên đại học',
-      durationTime: 4200, // 70 hours
+      durationTime: 4200, // 70 giờ
       price: 89.99,
       thumbnail:
         'https://plus.unsplash.com/premium_photo-1724800663657-3e57bf4f622c?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -1000,7 +1001,7 @@ async function main() {
         instructorId: instructor.instructorId,
         ...courseInfo,
         approved: 'APPROVED',
-        rating: 4.0 + Math.random(), // Random rating từ 4.0 đến 5.0
+        rating: 4.0 + Math.random(), // Đánh giá ngẫu nhiên từ 4.0 đến 5.0
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1024,7 +1025,7 @@ async function main() {
         instructorId: instructor.instructorId,
         ...courseInfo,
         approved: 'APPROVED',
-        rating: 4.2 + Math.random() * 0.8, // Random rating từ 4.2 đến 5.0
+        rating: 4.2 + Math.random() * 0.8, // Đánh giá ngẫu nhiên từ 4.2 đến 5.0
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1039,7 +1040,7 @@ async function main() {
     });
   }
 
-  console.log('Seeding completed!');
+  console.log('Hoàn tất việc seed dữ liệu!');
 }
 
 main()

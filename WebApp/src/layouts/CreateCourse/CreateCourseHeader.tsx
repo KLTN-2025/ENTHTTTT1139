@@ -25,7 +25,7 @@ const CreateCourseHeader = ({ currentStep = 1 }: CreateCourseHeaderProps) => {
       <div className="flex items-center h-full">
         <div className="mb-2">
           <Image
-            src="/mentora-logo.svg"
+            src="/edulink-logo.svg"
             alt="logo"
             width={100}
             height={100}

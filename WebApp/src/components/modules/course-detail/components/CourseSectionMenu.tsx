@@ -41,6 +41,7 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
   const [completedLectures, setCompletedLectures] = useState<{ [key: string]: boolean }>({});
   const [completedQuizzes, setCompletedQuizzes] = useState<{ [key: string]: boolean }>({});
+  const [lectureDurationMap, setLectureDurationMap] = useState<{ [lectureId: string]: number }>({});
   const { calculateCourseProgress } = useProgressTracking();
   const { isLoggedIn } = useAuth();
 
@@ -66,15 +67,20 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
 
               const completedLecturesMap: { [key: string]: boolean } = {};
               const completedQuizzesMap: { [key: string]: boolean } = {};
+              const durationMap: { [key: string]: number } = {};
 
               // Xử lý dữ liệu từ API mới
-              progress.modules.forEach(module => {
+              progress.modules.forEach((module) => {
                 if (module && module.curricula) {
-                  module.curricula.forEach(curriculum => {
+                  module.curricula.forEach((curriculum) => {
                     // Xử lý bài giảng
                     if (curriculum.type === 'LECTURE' && curriculum.lecture) {
                       if (curriculum.progress && curriculum.progress.status === 'COMPLETED') {
                         completedLecturesMap[curriculum.lecture.lectureId] = true;
+                      }
+                      // Lưu duration nếu có
+                      if (curriculum.lecture.duration && curriculum.lecture.lectureId) {
+                        durationMap[curriculum.lecture.lectureId] = curriculum.lecture.duration;
                       }
                     }
                     // Xử lý bài quiz
@@ -89,6 +95,7 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
 
               setCompletedLectures(completedLecturesMap);
               setCompletedQuizzes(completedQuizzesMap);
+              setLectureDurationMap(durationMap);
             }
           } catch (error) {
             console.error('Error fetching course progress (new API):', error);
@@ -145,12 +152,12 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
   const getModuleProgressFromAPI = (moduleId: string) => {
     if (!moduleId || !courseProgress || !courseProgress.modules) return null;
 
-    const moduleData = courseProgress.modules.find(m => m && m.moduleId === moduleId);
+    const moduleData = courseProgress.modules.find((m) => m && m.moduleId === moduleId);
     if (moduleData) {
       return {
         completed: moduleData.completedCurricula,
         total: moduleData.totalCurricula,
-        percentage: moduleData.progressPercentage
+        percentage: moduleData.progressPercentage,
       };
     }
     return null;
@@ -187,7 +194,9 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
               const moduleProgress = getModuleProgressFromAPI(module.moduleId || '');
               const completionPercentage = moduleProgress
                 ? moduleProgress.percentage
-                : (isLoggedIn ? calculateCourseProgress([module.moduleId || '']) : 0);
+                : isLoggedIn
+                  ? calculateCourseProgress([module.moduleId || ''])
+                  : 0;
 
               return (
                 <AccordionItem
@@ -195,21 +204,28 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
                   value={`section-${index}`}
                   className="border-b border-gray-300"
                 >
-                  <AccordionTrigger className="bg-gray-200 py-3 grid grid-cols-7 gap-4 font-bold text-black text-sm px-3">
-                    <div className="col-span-3 col-start-1 flex items-center gap-2">
-                      <span className="text-sm text-black">{module.title}</span>
+                  <AccordionTrigger className="bg-gray-200 py-4 grid grid-cols-7 gap-4 font-semibold text-gray-900 text-base px-4">
+                    <div className="col-span-3 col-start-1 flex items-center gap-3">
+                      <span className="text-base text-gray-900">{module.title}</span>
                       {isLoggedIn && module.moduleId && (
-                        <div className="relative h-6 w-6 ml-2">
-                          <svg className="w-6 h-6" viewBox="0 0 36 36">
-                            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#e5e7eb" strokeWidth="3" />
+                        <div className="relative h-10 w-10 ml-2">
+                          <svg className="w-10 h-10" viewBox="0 0 36 36">
+                            <circle
+                              cx="18"
+                              cy="18"
+                              r="15.5"
+                              fill="none"
+                              stroke="#e5e7eb"
+                              strokeWidth="4"
+                            />
                             <circle
                               cx="18"
                               cy="18"
                               r="15.5"
                               fill="none"
                               stroke="#1dbe70"
-                              strokeWidth="3"
-                              strokeDasharray={`${completionPercentage * 0.97} 100`}
+                              strokeWidth="4"
+                              strokeDasharray={`${Math.min(completionPercentage, 100) * 1.05} 120`}
                               strokeLinecap="round"
                               transform="rotate(-90 18 18)"
                             />
@@ -218,8 +234,9 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
                               y="18"
                               dominantBaseline="middle"
                               textAnchor="middle"
-                              fontSize="8"
+                              fontSize="10"
                               fontWeight="bold"
+                              fill="#1f2937"
                             >
                               {completionPercentage}%
                             </text>
@@ -227,9 +244,18 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
                         </div>
                       )}
                     </div>
-                    <span className="col-span-3 col-start-4 text-sm text-black">
-                      {moduleProgress ? `${moduleProgress.completed}/${moduleProgress.total} hoàn thành` : `${module.curricula?.length} bài giảng`}
-                    </span>
+                    <div className="col-span-3 col-start-4 flex items-center gap-3 text-sm text-gray-600">
+                      <span className="font-medium">
+                        {moduleProgress
+                          ? `${moduleProgress.completed}/${moduleProgress.total} bài học`
+                          : `${module.curricula?.length} bài giảng`}
+                      </span>
+                      {moduleProgress && (
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
+                          {moduleProgress.percentage}% hoàn thành
+                        </span>
+                      )}
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent className="bg-white px-3 py-2 space-y-2">
                     {(module.curricula ?? []).length > 0 ? (
@@ -238,7 +264,8 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
                           {/* Lectures */}
                           {(curriculum.lectures ?? []).length > 0 &&
                             (curriculum.lectures ?? []).map((lecture) => {
-                              const isCompleted = isLectureCompletedFromAPI(lecture.lectureId) ||
+                              const isCompleted =
+                                isLectureCompletedFromAPI(lecture.lectureId) ||
                                 isCurriculumCompleted(curriculum.curriculumId);
 
                               return (
@@ -276,8 +303,14 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
                                     )}
                                   </div>
                                   <span className="text-black">
-                                {formatDurationToMinutesSeconds(lecture.duration)}
-                              </span>
+                                    {formatDurationToMinutesSeconds(
+                                      // Ưu tiên duration từ API tiến độ nếu có
+                                      lecture.lectureId &&
+                                        lectureDurationMap[lecture.lectureId] !== undefined
+                                        ? lectureDurationMap[lecture.lectureId]
+                                        : lecture.duration
+                                    )}
+                                  </span>
                                 </div>
                               );
                             })}
@@ -342,9 +375,10 @@ const CourseSectionMenu: React.FC<CourseSectionMenuProps> = ({ modules = [], cou
                             })}
 
                           {/* Chỉ hiện nếu không có lecture và không có quiz */}
-                          {curriculum.lectures?.length === 0 && curriculum.quizzes?.length === 0 && (
-                            <p className="text-sm text-gray-500 pl-4">Không có bài giảng nào</p>
-                          )}
+                          {curriculum.lectures?.length === 0 &&
+                            curriculum.quizzes?.length === 0 && (
+                              <p className="text-sm text-gray-500 pl-4">Không có bài giảng nào</p>
+                            )}
                         </div>
                       ))
                     ) : (

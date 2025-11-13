@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mb-12">
           <div className="mb-8 md:mb-0 flex flex-col items-center md:items-start">
             <Image
-              src="/mentora-footer.svg"
+              src="/edulink-footer.svg"
               alt="EduLink"
               width={140}
               height={60}
@@ -554,7 +554,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center mb-4 md:mb-0">
-            <Image src="/mentora-footer.svg" alt="logo" width={100} height={40} className="" />
+            <Image src="/edulink-footer.svg" alt="logo" width={100} height={40} className="" />
             <span className="ml-4 text-gray-300">© 2025 EduLink. Tất cả quyền được bảo lưu.</span>
           </div>
           <div className="flex items-center">

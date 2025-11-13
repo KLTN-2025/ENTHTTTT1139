@@ -53,10 +53,21 @@ export class PaymentController {
     );
 
     // Kiểm tra xem người dùng có đúng là instructor này hoặc là admin không
-    if (req.user.role !== 'ADMIN' && req.user.instructorId !== instructorId) {
-      throw new UnauthorizedException(
-        'Bạn không có quyền cập nhật thông tin này',
-      );
+    if (req.user.role !== 'ADMIN') {
+      // Lấy instructor và so sánh theo userId để tránh phụ thuộc claim instructorId trong JWT
+      const instructor = await this.prisma.tbl_instructors.findUnique({
+        where: { instructorId },
+        select: { userId: true },
+      });
+
+      if (
+        !instructor ||
+        instructor.userId !== (req.user.userId || req.user.sub)
+      ) {
+        throw new UnauthorizedException(
+          'Bạn không có quyền cập nhật thông tin này',
+        );
+      }
     }
 
     return this.paymentService.updateInstructorPaypalInfo(
@@ -83,8 +94,18 @@ export class PaymentController {
     );
 
     // Kiểm tra xem người dùng có đúng là instructor này hoặc là admin không
-    if (req.user.role !== 'ADMIN' && req.user.instructorId !== instructorId) {
-      throw new UnauthorizedException('Bạn không có quyền xem thông tin này');
+    if (req.user.role !== 'ADMIN') {
+      const instructor = await this.prisma.tbl_instructors.findUnique({
+        where: { instructorId },
+        select: { userId: true },
+      });
+
+      if (
+        !instructor ||
+        instructor.userId !== (req.user.userId || req.user.sub)
+      ) {
+        throw new UnauthorizedException('Bạn không có quyền xem thông tin này');
+      }
     }
 
     return this.paymentService.getInstructorPaypalInfo(instructorId);
@@ -108,8 +129,18 @@ export class PaymentController {
     );
 
     // Kiểm tra xem người dùng có đúng là instructor này hoặc là admin không
-    if (req.user.role !== 'ADMIN' && req.user.instructorId !== instructorId) {
-      throw new UnauthorizedException('Bạn không có quyền xem thông tin này');
+    if (req.user.role !== 'ADMIN') {
+      const instructor = await this.prisma.tbl_instructors.findUnique({
+        where: { instructorId },
+        select: { userId: true },
+      });
+
+      if (
+        !instructor ||
+        instructor.userId !== (req.user.userId || req.user.sub)
+      ) {
+        throw new UnauthorizedException('Bạn không có quyền xem thông tin này');
+      }
     }
 
     return this.paymentService.calculateInstructorPayout(instructorId);

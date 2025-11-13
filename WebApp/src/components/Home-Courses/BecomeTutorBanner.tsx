@@ -14,7 +14,7 @@ const BecomeTutorBanner = () => {
               <h1 className="text-white text-3xl sm:text-4xl font-bold">Trở thành giảng viên</h1>
               <span className="mt-2 sm:mt-0">
                 <Image
-                  src="/mentora-footer.svg"
+                  src="/edulink-footer.svg"
                   alt="logo"
                   width={150}
                   height={50}

@@ -6,11 +6,18 @@ export const formatDuration = (minutes: number): string => {
 
 /**
  * Định dạng thời lượng sang định dạng phút:giây
- * @param seconds Thời lượng tính bằng giây
+ * - Tự động nhận diện nếu input là milliseconds và quy đổi về giây.
+ * @param secondsOrMs Thời lượng tính bằng giây (hoặc mili-giây)
  * @returns Chuỗi định dạng "phút:giây"
  */
-export const formatDurationToMinutesSeconds = (seconds?: number | null): string => {
-  if (seconds === undefined || seconds === null) return '0:00';
+export const formatDurationToMinutesSeconds = (secondsOrMs?: number | null): string => {
+  if (secondsOrMs === undefined || secondsOrMs === null) return '0:00';
+
+  // Chuẩn hoá: nếu giá trị rất lớn (ngưỡng > 100000), coi là milliseconds
+  const seconds =
+    secondsOrMs > 100000
+      ? Math.floor(secondsOrMs / 1000)
+      : Math.floor(secondsOrMs);
 
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);

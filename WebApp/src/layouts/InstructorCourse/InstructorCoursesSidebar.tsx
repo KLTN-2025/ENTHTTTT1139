@@ -154,7 +154,7 @@ const InstructorCoursesSidebar = ({ currentTab = 'dashboard' }: InstructorCourse
       <div className="p-4 border-b border-gray-700">
         <Link href="/" className="flex items-center">
           <Image
-            src="/mentora-footer.svg"
+            src="/edulink-footer.svg"
             alt="logo"
             width={120}
             height={120}

@@ -185,7 +185,7 @@ export class UploadImageController {
       // Upload ảnh mới lên Cloudinary
       const result = await this.cloudinaryService.uploadImage(
         file,
-        `mentora/courses/${courseId}/thumbnail`,
+        `edulink/courses/${courseId}/thumbnail`,
       );
 
       // Cập nhật URL thumbnail mới vào database
@@ -264,7 +264,7 @@ export class UploadImageController {
       // Upload ảnh lên Cloudinary
       const result = await this.cloudinaryService.uploadImage(
         file,
-        `mentora/courses/${courseId}/${imageType}`,
+        `edulink/courses/${courseId}/${imageType}`,
       );
 
       return {
@@ -289,12 +289,13 @@ export class UploadImageController {
   async deleteCourseImage(@Param('publicId') publicId: string) {
     try {
       const result = await this.cloudinaryService.deleteImage(publicId);
-      
+
       return {
         success: result.result === 'ok',
-        message: result.result === 'ok' 
-          ? 'Xóa ảnh khóa học thành công' 
-          : 'Không thể xóa ảnh',
+        message:
+          result.result === 'ok'
+            ? 'Xóa ảnh khóa học thành công'
+            : 'Không thể xóa ảnh',
       };
     } catch (error) {
       throw new BadRequestException(`Lỗi khi xóa ảnh: ${error.message}`);

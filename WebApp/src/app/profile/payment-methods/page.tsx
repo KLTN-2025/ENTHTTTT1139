@@ -91,13 +91,29 @@ const PaymentMethodsPage = () => {
 
     setIsSubmitting(true);
     try {
-      await PaymentService.registerPaypal(instructorId, paypalEmail);
+      // Lấy instructorId “chuẩn” từ server để tránh sai lệch id
+      let targetInstructorId = instructorId;
+      try {
+        const myInfo = await PaymentService.getMyInstructorInfo();
+        if (myInfo?.instructorId) {
+          targetInstructorId = myInfo.instructorId;
+          setInstructorId(myInfo.instructorId);
+        }
+      } catch (e) {
+        // Bỏ qua, fallback dùng instructorId sẵn có
+      }
+
+      await PaymentService.registerPaypal(targetInstructorId, paypalEmail);
       toast.success('Đã đăng ký tài khoản PayPal. Vui lòng kiểm tra email để xác nhận.');
       await fetchPaypalStatus();
       setShowPaypalForm(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Lỗi khi đăng ký PayPal:', error);
-      toast.error('Không thể đăng ký tài khoản PayPal. Vui lòng thử lại sau.');
+      const msg =
+        error?.response?.status === 401
+          ? 'Bạn không có quyền cập nhật PayPal cho tài khoản này. Hãy dùng đúng tài khoản giảng viên của bạn.'
+          : 'Không thể đăng ký tài khoản PayPal. Vui lòng thử lại sau.';
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }
